@@ -1,11 +1,13 @@
 -- =====================================================================
 -- Skema Database: E-Voting Musyawarah Ambalan 2026/2027
--- Engine: MySQL / MariaDB
+-- Engine: PostgreSQL (Supabase)
 -- =====================================================================
 
-CREATE DATABASE IF NOT EXISTS evoting_ambalan
-  CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE evoting_ambalan;
+DROP TABLE IF EXISTS votes CASCADE;
+DROP TABLE IF EXISTS candidates CASCADE;
+DROP TABLE IF EXISTS categories CASCADE;
+DROP TABLE IF EXISTS voting_sessions CASCADE;
+DROP TABLE IF EXISTS voters CASCADE;
 
 -- ---------------------------------------------------------------------
 -- Peserta yang berhak memilih. `code` adalah NIS atau token unik yang
@@ -13,13 +15,13 @@ USE evoting_ambalan;
 -- mencegah double voting — dikunci lewat transaksi di vote.php.
 -- ---------------------------------------------------------------------
 CREATE TABLE voters (
-  id            INT AUTO_INCREMENT PRIMARY KEY,
+  id            SERIAL PRIMARY KEY,
   full_name     VARCHAR(120)        NOT NULL,
   code          VARCHAR(40)         NOT NULL UNIQUE,   -- NIS atau token
-  has_voted     TINYINT(1)          NOT NULL DEFAULT 0,
-  voted_at      DATETIME            NULL,
-  created_at    DATETIME            NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB;
+  has_voted     BOOLEAN             NOT NULL DEFAULT FALSE,
+  voted_at      TIMESTAMP           NULL,
+  created_at    TIMESTAMP           NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
 
 -- ---------------------------------------------------------------------
 -- Sesi login sementara. Dibuat saat login.php memverifikasi kode,
@@ -27,13 +29,13 @@ CREATE TABLE voters (
 -- Mencegah pengiriman suara tanpa melalui proses login yang sah.
 -- ---------------------------------------------------------------------
 CREATE TABLE voting_sessions (
-  id             INT AUTO_INCREMENT PRIMARY KEY,
+  id             SERIAL PRIMARY KEY,
   session_token  CHAR(64)        NOT NULL UNIQUE,
-  voter_id       INT             NOT NULL,
-  expires_at     DATETIME        NOT NULL,
-  created_at     DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  voter_id       INTEGER         NOT NULL,
+  expires_at     TIMESTAMP       NOT NULL,
+  created_at     TIMESTAMP       NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (voter_id) REFERENCES voters(id) ON DELETE CASCADE
-) ENGINE=InnoDB;
+);
 
 -- ---------------------------------------------------------------------
 -- Kategori pemilihan (Pemangku Adat Putri/Putra, Pradana Putri/Putra, dst).
@@ -42,7 +44,7 @@ CREATE TABLE categories (
   id      VARCHAR(40)   PRIMARY KEY,   -- slug, mis. 'pradana_putra'
   label   VARCHAR(120)  NOT NULL,
   short   VARCHAR(60)   NOT NULL       -- nama singkat untuk UI bilik suara
-) ENGINE=InnoDB;
+);
 
 -- ---------------------------------------------------------------------
 -- Kandidat per kategori.
@@ -52,7 +54,7 @@ CREATE TABLE candidates (
   category_id   VARCHAR(40)   NOT NULL,
   name          VARCHAR(120)  NOT NULL,
   FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE
-) ENGINE=InnoDB;
+);
 
 -- ---------------------------------------------------------------------
 -- Satu baris = satu suara sah untuk satu kategori dari satu voter.
@@ -63,16 +65,16 @@ CREATE TABLE candidates (
 -- bisa dikorelasikan balik ke voters lewat log aplikasi).
 -- ---------------------------------------------------------------------
 CREATE TABLE votes (
-  id            INT AUTO_INCREMENT PRIMARY KEY,
-  voter_id      INT           NOT NULL,
+  id            SERIAL PRIMARY KEY,
+  voter_id      INTEGER       NOT NULL,
   category_id   VARCHAR(40)   NOT NULL,
   candidate_id  VARCHAR(20)   NOT NULL,
-  created_at    DATETIME      NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  UNIQUE KEY uniq_voter_category (voter_id, category_id),
+  created_at    TIMESTAMP     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE (voter_id, category_id),
   FOREIGN KEY (voter_id) REFERENCES voters(id) ON DELETE CASCADE,
   FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE,
   FOREIGN KEY (candidate_id) REFERENCES candidates(id) ON DELETE CASCADE
-) ENGINE=InnoDB;
+);
 
 -- ---------------------------------------------------------------------
 -- Data awal kategori & kandidat sesuai daftar yang diberikan.
