@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Panitia — E-Voting Musyawarah Ambalan</title>
+<link rel="stylesheet" href="css/style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
+</head>
+<body>
+<div class="shell">
+
+  <header class="topbar">
+    <div class="emblem">MA</div>
+    <div class="titles">
+      <div class="t1">Panel Panitia</div>
+      <div class="t2">Dashboard Hasil E-Voting</div>
+    </div>
+    <div style="margin-left:auto;" class="refresh-note">
+      <span class="live-dot"></span> <span id="lastUpdated">memuat…</span>
+    </div>
+  </header>
+
+  <main>
+    <!-- Gerbang kata sandi panitia (sederhana, sisi klien) -->
+    <section id="gate" class="stitch-border" style="max-width:420px;margin:20px auto;padding:28px 26px;">
+      <div class="eyebrow" style="text-align:center;display:block;margin-bottom:8px;">Akses Terbatas</div>
+      <h1 class="font-display" style="font-size:22px;text-align:center;margin-bottom:16px;">Masuk sebagai Panitia</h1>
+      <label for="adminPass">Kata Sandi Panitia</label>
+      <input type="password" id="adminPass" placeholder="••••••••">
+      <div class="error-text" id="gateError"></div>
+      <button class="btn btn-gold btn-block" id="gateBtn" style="margin-top:6px;">Masuk ke Dashboard</button>
+    </section>
+
+    <!-- Dashboard (ditampilkan setelah gate lolos) -->
+    <div id="dashboard" style="display:none;">
+      <div class="stat-row">
+        <div class="stat-card stitch-border">
+          <div class="num" id="statTotalVoters">–</div>
+          <div class="label">Total Peserta Terdaftar</div>
+        </div>
+        <div class="stat-card stitch-border">
+          <div class="num" id="statVoted">–</div>
+          <div class="label">Sudah Memilih</div>
+        </div>
+        <div class="stat-card stitch-border">
+          <div class="num" id="statTurnout">–</div>
+          <div class="label">Partisipasi (%)</div>
+        </div>
+      </div>
+
+      <div id="categoryPanels"></div>
+    </div>
+  </main>
+
+  <p class="footer-note">Data diperbarui otomatis setiap 10 detik selama masa pemungutan suara berlangsung.</p>
+</div>
+
+<script src="js/candidates.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>

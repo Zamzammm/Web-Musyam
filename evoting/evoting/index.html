@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Masuk — E-Voting Musyawarah Ambalan 2026/2027</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="shell">
+
+  <header class="topbar">
+    <div class="emblem">MA</div>
+    <div class="titles">
+      <div class="t1">E-Voting Resmi</div>
+      <div class="t2">Musyawarah Ambalan 2026/2027</div>
+    </div>
+  </header>
+
+  <main>
+    <section class="stitch-border card-login">
+      <span class="ticket-notch left"></span>
+      <span class="ticket-notch right"></span>
+
+      <div class="eyebrow" style="text-align:center;display:block;margin-bottom:8px;">Kartu Tanda Pemilih</div>
+      <h1 class="font-display" style="text-align:center;font-size:26px;margin-bottom:6px;">Masuk untuk Memilih</h1>
+      <p style="text-align:center;color:var(--bark-700);font-size:14px;margin:0 0 26px;">
+        Masukkan NIS atau Token unik yang diberikan panitia. Setiap kode hanya
+        dapat digunakan satu kali untuk menjaga keadilan suara.
+      </p>
+
+      <form id="loginForm" novalidate>
+        <label for="nis">NIS / Token Pemilih</label>
+        <input type="text" id="nis" name="nis" placeholder="cth. 2425-0917 / TKN-8841" autocomplete="off" inputmode="text" required>
+        <div class="error-text" id="errorText" role="alert"></div>
+
+        <button type="submit" class="btn btn-gold btn-block" style="margin-top:6px;">
+          Lanjut ke Bilik Suara →
+        </button>
+      </form>
+
+      <p style="text-align:center;font-size:12px;color:var(--bark-500);margin-top:18px;">
+        Kehilangan token? Hubungi panitia pemungutan suara di sekretariat.
+      </p>
+    </section>
+
+    <p style="text-align:center;margin-top:22px;">
+      <a href="admin.html" class="badge-pill" style="text-decoration:none;">Masuk sebagai Panitia →</a>
+    </p>
+  </main>
+
+  <p class="footer-note">Gerakan Pramuka · Sistem E-Voting Ambalan · Kerahasiaan suara dijamin</p>
+</div>
+
+<script src="js/login.js"></script>
+</body>
+</html>

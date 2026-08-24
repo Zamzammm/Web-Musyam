@@ -1,0 +1,387 @@
+/* ===================================================================
+   MUSDA E-VOTING — Design system
+   Tema: "Kartu Tanda Anggota & Lencana" (membership card + badge)
+   =================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+
+:root{
+  /* --- Color tokens ------------------------------------------------ */
+  --paper:        #EDE3CE;   /* cokelat muda / parchment background   */
+  --paper-deep:   #E3D5B8;   /* card background, slightly deeper      */
+  --bark-900:     #2B2013;   /* ink — headings, high-contrast text    */
+  --bark-700:     #5A4530;   /* body text, borders                    */
+  --bark-500:     #8B6F4E;   /* muted text, dividers                  */
+  --tan-300:      #C7AD82;   /* light tan — hairlines, chips          */
+  --bark-deep:    #241A10;   /* cokelat tua — header/footer/dark UI   */
+  --gold:         #B98A2E;   /* lencana gold — accents, focus, CTA    */
+  --gold-soft:    #E4C77A;   /* gold highlight fill                   */
+  --rank-red:     #7A2E1F;   /* rank-cord red — errors / destructive  */
+  --ok-green:     #4B5D3A;   /* khaki green — success states          */
+  --canvas:       #F6EFDD;   /* card interior canvas                  */
+
+  /* --- Type ---------------------------------------------------------*/
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body:    'Work Sans', system-ui, sans-serif;
+  --font-mono:    'Space Mono', 'Courier New', monospace;
+
+  --radius-card: 14px;
+  --radius-sm: 8px;
+  --shadow-stamp: 0 1px 0 rgba(43,32,19,0.12), 0 8px 20px -10px rgba(43,32,19,0.35);
+}
+
+*{ box-sizing: border-box; }
+html,body{ height:100%; }
+
+body{
+  margin:0;
+  background:
+    radial-gradient(1200px 600px at 10% -10%, rgba(185,138,46,0.10), transparent 60%),
+    radial-gradient(900px 500px at 110% 10%, rgba(122,46,31,0.06), transparent 55%),
+    var(--paper);
+  color: var(--bark-900);
+  font-family: var(--font-body);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Woven rope-stitch texture used as a border device on cards & header */
+.stitch-border{
+  position:relative;
+  border: 2px solid var(--bark-700);
+  border-radius: var(--radius-card);
+  background: var(--canvas);
+  box-shadow: var(--shadow-stamp);
+}
+.stitch-border::before{
+  content:"";
+  position:absolute; inset:6px;
+  border: 1.5px dashed var(--tan-300);
+  border-radius: calc(var(--radius-card) - 6px);
+  pointer-events:none;
+}
+
+a{ color: inherit; }
+
+h1,h2,h3,.font-display{ font-family: var(--font-display); letter-spacing:-0.01em; margin:0; }
+.eyebrow{
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* --- Layout shell -----------------------------------------------------*/
+.shell{
+  min-height:100%;
+  display:flex;
+  flex-direction:column;
+}
+
+.topbar{
+  background: var(--bark-deep);
+  color: var(--paper);
+  padding: 16px 20px;
+  display:flex;
+  align-items:center;
+  gap:14px;
+  border-bottom: 4px solid var(--gold);
+}
+.topbar .emblem{
+  width:38px; height:38px; border-radius:50%;
+  background: radial-gradient(circle at 32% 30%, var(--gold-soft), var(--gold) 55%, #8a661f 100%);
+  display:flex; align-items:center; justify-content:center;
+  font-family: var(--font-display); font-weight:700; color: var(--bark-deep);
+  font-size:16px;
+  border: 2px solid rgba(255,255,255,0.35);
+  flex: none;
+}
+.topbar .titles{ display:flex; flex-direction:column; gap:2px; }
+.topbar .titles .t1{ font-family: var(--font-mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color: var(--tan-300); }
+.topbar .titles .t2{ font-family: var(--font-display); font-size:16px; font-weight:600; }
+
+main{
+  flex:1;
+  width:100%;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 28px 18px 60px;
+}
+
+.footer-note{
+  text-align:center;
+  font-family: var(--font-mono);
+  font-size:11px;
+  color: var(--bark-500);
+  padding: 18px;
+}
+
+/* --- Buttons -----------------------------------------------------------*/
+.btn{
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 15px;
+  padding: 12px 22px;
+  border-radius: 999px;
+  border: 2px solid var(--bark-900);
+  background: var(--bark-900);
+  color: var(--paper);
+  cursor:pointer;
+  transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+  display:inline-flex; align-items:center; justify-content:center; gap:8px;
+}
+.btn:hover{ transform: translateY(-1px); box-shadow: 0 6px 14px -6px rgba(43,32,19,0.5); }
+.btn:active{ transform: translateY(0); }
+.btn:focus-visible{ outline: 3px solid var(--gold); outline-offset: 2px; }
+
+.btn-gold{
+  background: linear-gradient(180deg, var(--gold-soft), var(--gold));
+  border-color: var(--gold);
+  color: var(--bark-deep);
+}
+.btn-outline{
+  background: transparent;
+  color: var(--bark-900);
+}
+.btn-block{ width:100%; }
+.btn[disabled]{ opacity:.5; cursor:not-allowed; transform:none; box-shadow:none; }
+
+/* --- Form elements -------------------------------------------------------*/
+label{
+  display:block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing:.1em;
+  text-transform: uppercase;
+  color: var(--bark-500);
+  margin-bottom: 6px;
+}
+input[type=text], input[type=password]{
+  width:100%;
+  font-family: var(--font-mono);
+  font-size: 18px;
+  letter-spacing: .08em;
+  padding: 14px 16px;
+  border-radius: var(--radius-sm);
+  border: 2px solid var(--bark-700);
+  background: #fffaf0;
+  color: var(--bark-900);
+}
+input:focus-visible{ outline: 3px solid var(--gold); outline-offset: 1px; }
+
+.error-text{
+  color: var(--rank-red);
+  font-size: 13px;
+  font-family: var(--font-body);
+  margin-top: 8px;
+  min-height: 18px;
+}
+
+/* --- Login card (kartu anggota) ------------------------------------------*/
+.card-login{
+  max-width: 440px;
+  margin: 20px auto 0;
+  padding: 30px 28px 26px;
+  position: relative;
+}
+.card-login .ticket-notch{
+  position:absolute; top:50%; width:22px; height:22px;
+  background: var(--paper);
+  border: 2px solid var(--bark-700);
+  border-radius:50%;
+  transform: translateY(-50%);
+}
+.card-login .ticket-notch.left{ left:-13px; border-right:none; }
+.card-login .ticket-notch.right{ right:-13px; border-left:none; }
+
+/* --- Category tabs ---------------------------------------------------------*/
+.tabs{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  padding-bottom: 6px;
+  margin-bottom: 20px;
+  scrollbar-width: thin;
+}
+.tab{
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing:.06em;
+  text-transform: uppercase;
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: 2px solid var(--bark-700);
+  background: transparent;
+  color: var(--bark-700);
+  cursor:pointer;
+  white-space:nowrap;
+  display:flex; align-items:center; gap:8px;
+}
+.tab .dot{ width:7px; height:7px; border-radius:50%; background: var(--tan-300); }
+.tab.done{ border-color: var(--ok-green); color: var(--ok-green); }
+.tab.done .dot{ background: var(--ok-green); }
+.tab.active{ background: var(--bark-900); color: var(--paper); border-color: var(--bark-900); }
+.tab.active .dot{ background: var(--gold); }
+
+/* --- Candidate grid / badge cards -------------------------------------------*/
+.grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+}
+.candidate{
+  padding: 20px 18px 18px;
+  text-align:center;
+  cursor:pointer;
+  transition: transform .12s ease;
+}
+.candidate:hover{ transform: translateY(-3px); }
+.candidate.selected{
+  border-color: var(--gold);
+  background: linear-gradient(180deg, #FBF2D9, var(--canvas));
+}
+.candidate.selected::before{ border-color: var(--gold); }
+
+.photo-frame{
+  width: 96px; height:96px;
+  margin: 0 auto 14px;
+  border-radius:50%;
+  border: 3px solid var(--bark-700);
+  background: linear-gradient(160deg, var(--tan-300), var(--paper-deep));
+  display:flex; align-items:center; justify-content:center;
+  font-family: var(--font-display);
+  font-size: 30px;
+  font-weight: 600;
+  color: var(--bark-deep);
+  position:relative;
+}
+.candidate.selected .photo-frame{
+  border-color: var(--gold);
+  box-shadow: 0 0 0 4px rgba(185,138,46,0.22);
+}
+.candidate-name{ font-family: var(--font-display); font-size:19px; font-weight:600; margin-bottom:4px; }
+.candidate-number{ font-family: var(--font-mono); font-size:11px; color: var(--bark-500); letter-spacing:.1em; text-transform:uppercase; }
+
+.check-badge{
+  position:absolute; top:12px; right:12px;
+  width:26px; height:26px; border-radius:50%;
+  background: var(--gold);
+  color: var(--bark-deep);
+  display:none;
+  align-items:center; justify-content:center;
+  font-size:14px; font-weight:700;
+  border: 2px solid var(--canvas);
+}
+.candidate.selected .check-badge{ display:flex; }
+
+/* --- Modal ------------------------------------------------------------------*/
+.modal-overlay{
+  position:fixed; inset:0;
+  background: rgba(36,26,16,0.55);
+  display:none;
+  align-items:center; justify-content:center;
+  padding: 20px;
+  z-index: 50;
+}
+.modal-overlay.open{ display:flex; }
+.modal{
+  max-width: 420px;
+  width:100%;
+  padding: 26px 24px;
+  text-align:center;
+}
+.modal h3{ font-size:21px; margin-bottom:10px; }
+.modal p{ color: var(--bark-700); margin: 0 0 20px; }
+.modal .modal-actions{ display:flex; gap:10px; }
+.modal .choice-summary{
+  background: var(--paper-deep);
+  border: 1.5px dashed var(--tan-300);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  margin-bottom: 18px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  text-align:left;
+}
+.modal .choice-summary div{ padding: 3px 0; }
+.modal .choice-summary b{ color: var(--bark-900); }
+
+/* --- Success page ------------------------------------------------------------*/
+.success-wrap{
+  max-width: 480px;
+  margin: 40px auto;
+  padding: 44px 30px;
+  text-align:center;
+}
+.seal{
+  width:84px; height:84px;
+  margin: 0 auto 22px;
+  border-radius:50%;
+  background: radial-gradient(circle at 35% 30%, var(--gold-soft), var(--gold) 60%, #86611c 100%);
+  display:flex; align-items:center; justify-content:center;
+  font-size: 38px;
+  border: 3px solid var(--bark-deep);
+  color: var(--bark-deep);
+}
+
+/* --- Admin dashboard ----------------------------------------------------------*/
+.stat-row{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px,1fr));
+  gap:14px;
+  margin-bottom: 26px;
+}
+.stat-card{ padding: 18px; }
+.stat-card .num{ font-family: var(--font-display); font-size: 32px; font-weight:700; color: var(--bark-deep); }
+.stat-card .label{ font-family: var(--font-mono); font-size: 11px; text-transform:uppercase; letter-spacing:.08em; color: var(--bark-500); margin-top:4px; }
+
+.panel{ padding: 22px; margin-bottom: 22px; }
+.panel h2{ font-size: 20px; margin-bottom: 4px; }
+.panel .sub{ color: var(--bark-500); font-size: 13px; margin-bottom: 18px; }
+.chart-wrap{ position:relative; height: 280px; }
+
+.leader-list{ list-style:none; margin:0; padding:0; }
+.leader-list li{
+  display:flex; align-items:center; gap:12px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--tan-300);
+  font-family: var(--font-body);
+}
+.leader-list li:last-child{ border-bottom:none; }
+.leader-list .bar-track{ flex:1; height:8px; background: var(--paper-deep); border-radius:999px; overflow:hidden; }
+.leader-list .bar-fill{ height:100%; background: linear-gradient(90deg, var(--gold), var(--rank-red)); }
+.leader-list .pct{ font-family: var(--font-mono); font-size:12px; width:44px; text-align:right; color: var(--bark-700); }
+
+.refresh-note{
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--bark-500);
+  display:flex; align-items:center; gap:8px;
+}
+.live-dot{ width:8px; height:8px; border-radius:50%; background: var(--ok-green); box-shadow: 0 0 0 3px rgba(75,93,58,0.2); }
+
+.badge-pill{
+  display:inline-block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--paper-deep);
+  border: 1px solid var(--tan-300);
+  color: var(--bark-700);
+}
+
+/* --- Responsive -----------------------------------------------------------------*/
+@media (max-width: 480px){
+  main{ padding: 20px 14px 50px; }
+  .topbar .titles .t2{ font-size:14px; }
+  .candidate{ padding: 16px 12px; }
+  .photo-frame{ width:78px; height:78px; font-size:24px; }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce){
+  *{ transition:none !important; animation:none !important; }
+}

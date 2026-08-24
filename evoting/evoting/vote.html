@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bilik Suara — Musyawarah Ambalan 2026/2027</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="shell">
+
+  <header class="topbar">
+    <div class="emblem">MA</div>
+    <div class="titles">
+      <div class="t1">E-Voting Resmi</div>
+      <div class="t2">Musyawarah Ambalan 2026/2027</div>
+    </div>
+  </header>
+
+  <main>
+    <div class="eyebrow">Bilik Suara</div>
+    <h1 class="font-display" style="font-size:26px;margin:6px 0 4px;">Pilih Satu Kandidat di Setiap Kategori</h1>
+    <p style="color:var(--bark-700);font-size:14px;margin:0 0 22px;">
+      Ketuk kartu kandidat untuk memilih. Anda dapat berpindah kategori
+      lewat tab di bawah. Suara baru terkirim setelah Anda menekan
+      "Kirim Suara" dan mengonfirmasi pilihan.
+    </p>
+
+    <nav class="tabs" id="tabs"></nav>
+
+    <section id="categoryPanel"></section>
+
+    <div style="display:flex; justify-content:flex-end; margin-top:26px;">
+      <button class="btn btn-gold" id="submitBtn" disabled>Kirim Suara →</button>
+    </div>
+  </main>
+
+  <p class="footer-note">Suara Anda bersifat rahasia dan hanya dihitung satu kali per kategori.</p>
+</div>
+
+<!-- Modal konfirmasi -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal stitch-border">
+    <h3 class="font-display">Konfirmasi Pilihan Anda</h3>
+    <p>Periksa kembali sebelum suara dikirim — pilihan tidak dapat diubah setelah ini.</p>
+    <div class="choice-summary" id="choiceSummary"></div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" id="cancelBtn" style="flex:1;">Periksa Lagi</button>
+      <button class="btn btn-gold" id="confirmBtn" style="flex:1;">Ya, Kirim</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/candidates.js"></script>
+<script src="js/vote.js"></script>
+</body>
+</html>
