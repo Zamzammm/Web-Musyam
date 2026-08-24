@@ -7,7 +7,7 @@
  * lalu menerbitkan session_token sekali pakai yang berlaku singkat
  * (default 20 menit) untuk dipakai di halaman pemilihan.
  */
-require_once __DIR__ . '/../config.php';
+require_once __DIR__ . '/../backend/config.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     json_response(['ok' => false, 'message' => 'Metode tidak diizinkan.'], 405);

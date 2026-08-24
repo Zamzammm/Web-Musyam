@@ -32,7 +32,7 @@ form.addEventListener('submit', async (e) => {
   submitBtn.textContent = 'Memeriksa…';
 
   try {
-    const res = await fetch('backend/api/login.php', {
+    const res = await fetch('api/login.php', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ code }),

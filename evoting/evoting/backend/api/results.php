@@ -10,7 +10,7 @@
  * bukan hanya gerbang kata sandi di sisi klien (js/admin.js). Tambahkan
  * pengecekan session di sini sebelum query dijalankan.
  */
-require_once __DIR__ . '/../config.php';
+require_once __DIR__ . '/../backend/config.php';
 
 // require_admin_session(); // <-- aktifkan setelah autentikasi panitia dibuat
 

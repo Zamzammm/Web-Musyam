@@ -11,7 +11,7 @@
  * agar tidak mungkin terjadi race condition / double voting walau
  * permintaan datang bersamaan.
  */
-require_once __DIR__ . '/../config.php';
+require_once __DIR__ . '/../backend/config.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     json_response(['ok' => false, 'message' => 'Metode tidak diizinkan.'], 405);

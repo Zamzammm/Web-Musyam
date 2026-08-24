@@ -23,7 +23,7 @@ const tabsEl = document.getElementById('tabs');
 const panelEl = document.getElementById('categoryPanel');
 const submitBtn = document.getElementById('submitBtn');
 
-function renderTabs(){
+function renderTabs() {
   tabsEl.innerHTML = CATEGORIES.map((cat, i) => `
     <button class="tab ${i === activeCategoryIndex ? 'active' : ''} ${selections[cat.id] ? 'done' : ''}"
             data-index="${i}">
@@ -40,7 +40,7 @@ function renderTabs(){
   });
 }
 
-function renderPanel(){
+function renderPanel() {
   const cat = CATEGORIES[activeCategoryIndex];
   panelEl.innerHTML = `
     <h2 class="font-display" style="font-size:20px;margin-bottom:14px;">${cat.label}</h2>
@@ -76,12 +76,12 @@ function renderPanel(){
   });
 }
 
-function updateSubmitState(){
+function updateSubmitState() {
   const allDone = CATEGORIES.every(cat => selections[cat.id]);
   submitBtn.disabled = !allDone;
 }
 
-function nameFor(catId, candId){
+function nameFor(catId, candId) {
   const cat = CATEGORIES.find(c => c.id === catId);
   const cand = cat.candidates.find(c => c.id === candId);
   return cand ? cand.name : '—';
@@ -110,7 +110,7 @@ confirmBtn.addEventListener('click', async () => {
   confirmBtn.textContent = 'Mengirim…';
 
   try {
-    const res = await fetch('backend/api/vote.php', {
+    const res = await fetch('api/vote.php', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ session_token: sessionToken, selections }),

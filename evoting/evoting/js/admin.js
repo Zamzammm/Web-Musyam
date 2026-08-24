@@ -106,7 +106,7 @@ function renderResults(payload) {
 
 async function fetchResults() {
   try {
-    const res = await fetch('backend/api/results.php');
+    const res = await fetch('api/results.php');
     if (!res.ok) throw new Error('bad response');
     const data = await res.json();
     renderResults(data);
